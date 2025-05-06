@@ -1,0 +1,64 @@
+<mvc:View controllerName="firstapp.project1.controller.View1"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page">
+        <customHeader>
+            <Bar id="barId">
+                <contentMiddle>
+                    <HBox id="hboxId">
+                    <Image id="imageId" class="imgTitulo" src="imgs/SAP_2011_logo.svg"/>
+                    <Title id="titleId" text="{i18n>Formulário Simples}"
+                     class="tituloPersonalizado"/>
+                    </HBox>
+                </contentMiddle>
+            </Bar>
+        </customHeader>
+        <content>
+            <VBox id="vboxInicial"  class="sapUiSmallMargin meuFormulario">
+                <form:SimpleForm id="simpleform">
+                    <form:content>
+                        <Label id="LabelNome" text="Nome" />
+                        <Input id="inputNome" value="{batatinha>/nome}" />
+
+                        <Label id="labelIdade" text="Idade" />
+                        <Input id="inputIdade" value="{batatinha>/idade}" type="Number" />
+
+                        <Label id="labelCPF" text="CPF" />
+                        <Input id="inputCPF" type="Number" placeholder="___.___.___-__" value="{batatinha>/cpf}" />
+
+                        <VBox id="vboxButton" class="vboxButtonGrid">
+                            <Button id="btnCadastro" text="Cadastrar" press="onSalvarPessoa" type="Emphasized"/>
+                            
+                            <Button id="btnExcluir" text="Excluir" press="onExcluirPessoa"/>
+                        </VBox>            
+                    </form:content>
+                </form:SimpleForm>
+
+                <Table id="pessoasTable" items="{/pessoa}">
+                    <columns>
+                        <Column id="columCPF">
+                            <Text id="txtCPF" text="CPF" />
+                        </Column>
+
+                        <Column id="columNome">
+                            <Text id="txtNome" text="Nome" />
+                        </Column>
+                        <Column id="columIdade">
+                            <Text id="txtIdade" text="Idade" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem id="clmnListItem">
+                            <cells>
+                                <Text id="cellcpf" text="{cpf}" />
+                                <Text id="cellNome"  text="{nome}" />
+                                <Text id="cellIdade"  text="{idade}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
