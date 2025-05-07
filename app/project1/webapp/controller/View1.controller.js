@@ -15,6 +15,10 @@ sap.ui.define([
             this.getView().setModel(oFormModel, "batatinha");
         },
 
+        navButton: function() {
+            this.getOwnerComponent().getRouter().navTo("View2");
+        },
+
         onNomeChange: function(oEvent) {
             const oInput = oEvent.getSource();
             const nome = oInput.getValue();
@@ -70,20 +74,20 @@ sap.ui.define([
 
             if (!nome || nome.trim() === "") {
                 oNomeInput.setValueState("Error");
-                errorMessage = "Nome inválido.";
+                errorMessage = "Nome inválido.\n";
                 isValid = false;
             }
 
             if (!idade || isNaN(idade) || parseInt(idade) <= 0) {
                 oIdadeInput.setValueState("Error");
-                errorMessage += "Idade Inválida.";
+                errorMessage += "Idade Inválida.\n";
                 isValid = false;
             }
 
-            if (cpf.legth !== 11) {
+            if (cpfStr.length !== 11) {
                 oCpfInput.setValueState("Error");
-                errorMessage += "CPF inválido";
-                isValid = false;
+                errorMessage += "CPF inválido.\n";
+                isValid = false;    
             }
 
             return { isValid, errorMessage };

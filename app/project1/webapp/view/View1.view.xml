@@ -10,10 +10,12 @@
                     <Image id="imageId" class="imgTitulo" src="imgs/SAP_2011_logo.svg"/>
                     <Title id="titleId" text="{i18n>Formulário Simples}"
                      class="tituloPersonalizado"/>
+                     <Button id="buttonNav" press="navButton" text="Isso é um botão"/>
                     </HBox>
                 </contentMiddle>
             </Bar>
         </customHeader>
+        
         <content>
             <VBox id="vboxInicial"  class="sapUiSmallMargin meuFormulario">
                 <form:SimpleForm id="simpleform">

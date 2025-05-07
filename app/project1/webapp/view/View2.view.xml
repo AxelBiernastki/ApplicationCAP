@@ -1,0 +1,18 @@
+<mvc:View controllerName="firstapp.project1.controller.View1"
+    xmlns:f="sap.f"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page2">
+        <customHeader>
+            <Bar id="barId2">
+                <contentMiddle>
+                    <HBox id="hboxId2">
+                    <Image id="imageId2" class="imgTitulo" src="imgs/SAP_2011_logo.svg"/>
+                    <Title id="titleId2" text="{i18n>Segunda Página}"
+                     class="tituloPersonalizado"/>
+                    </HBox>
+                </contentMiddle>
+            </Bar>
+        </customHeader>
+    </Page>
+</mvc:View>
