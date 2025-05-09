@@ -10,7 +10,6 @@
                     <Image id="imageId" class="imgTitulo" src="imgs/SAP_2011_logo.svg"/>
                     <Title id="titleId" text="{i18n>Formulário Simples}"
                      class="tituloPersonalizado"/>
-                     <Button id="buttonNav" press="navButton" text="Isso é um botão"/>
                     </HBox>
                 </contentMiddle>
             </Bar>
@@ -21,18 +20,18 @@
                 <form:SimpleForm id="simpleform">
                     <form:content>
                         <Label id="LabelNome" text="Nome" />
-                        <Input id="inputNome" value="{batatinha>/nome}" />
+                        <Input id="inputNome" value="{formModel>/nome}" liveChange="onNomeLiveChange" change="onNomeChange" required="true"/>
 
                         <Label id="labelIdade" text="Idade" />
-                        <Input id="inputIdade" value="{batatinha>/idade}" type="Number" />
+                        <Input id="inputIdade" value="{formModel>/idade}" liveChange="onIdadeLiveChange" change="onIdadeChange"/>
 
                         <Label id="labelCPF" text="CPF" />
-                        <Input id="inputCPF" type="Number" placeholder="___.___.___-__" value="{batatinha>/cpf}" />
+                        <Input id="inputCPF" maxLength="11" liveChange="onCpfLiveChange" change="onCpfChange" value="{formModel>/cpf}" required="true" />
 
                         <VBox id="vboxButton" class="vboxButtonGrid">
                             <Button id="btnCadastro" text="Cadastrar" press="onSalvarPessoa" type="Emphasized"/>
                             
-                            <Button id="btnExcluir" text="Excluir" press="onExcluirPessoa"/>
+                            <Button id="buttonNav" press="onNavButton" text="Ver detalhes"/>
                         </VBox>            
                     </form:content>
                 </form:SimpleForm>
@@ -42,7 +41,6 @@
                         <Column id="columCPF">
                             <Text id="txtCPF" text="CPF" />
                         </Column>
-
                         <Column id="columNome">
                             <Text id="txtNome" text="Nome" />
                         </Column>
@@ -53,8 +51,8 @@
                     <items>
                         <ColumnListItem id="clmnListItem">
                             <cells>
-                                <Text id="cellcpf" text="{cpf}" />
-                                <Text id="cellNome"  text="{nome}" />
+                                <Text id="cellcpf" text="{cpf}"/>
+                                <Text id="cellNome"  text="{nome}"/>
                                 <Text id="cellIdade"  text="{idade}" />
                             </cells>
                         </ColumnListItem>

@@ -7,5 +7,9 @@ sap.ui.define([
         onInit() {
         },
 
+        navButton2: function() {
+            this.getOwnerComponent().getRouter().navTo("RouteView1");
+        },
+
     });
 });
