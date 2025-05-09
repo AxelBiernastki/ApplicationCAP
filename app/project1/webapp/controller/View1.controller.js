@@ -177,6 +177,8 @@ sap.ui.define([
         },
 
         validateFields: function() {
+
+            // Obtem as referências dos elementos de input do formulário
             const oNomeInput = this.byId("inputNome");
             const oIdadeInput = this.byId("inputIdade");
             const oCpfInput = this.byId("inputCPF");
@@ -184,7 +186,6 @@ sap.ui.define([
             const nome = oNomeInput.getValue();
             const idade = oIdadeInput.getValue();
             const cpf = oCpfInput.getValue();
-            const cpfStr = String(cpf).replace(/[^0-9]/g, "");
 
             let isValid = true;
             let errorMessage = "";
@@ -195,13 +196,13 @@ sap.ui.define([
                 isValid = false;
             }
 
-            // if (!idade || isNaN(idade) || parseInt(idade) <= 0) {
-            //     oIdadeInput.setValueState("Error");
-            //     errorMessage += "Idade Inválida.\n";
-            //     isValid = false;
-            // }
+            if (parseInt(idade) == 0) {
+                oIdadeInput.setValueState("Error");
+                errorMessage += "Idade zero é Inválida.\n";
+                isValid = false;
+            }
 
-            if (cpfStr.length !== 11) {
+            if (cpf.length !== 11) {
                 oCpfInput.setValueState("Error");
                 errorMessage += "CPF inválido.\n";
                 isValid = false;    
@@ -211,19 +212,21 @@ sap.ui.define([
         },
 
         clearForm: function() {
+
+            // Limpa os campos na interface do usuário
             this.getView().getModel("formModel").setData({
                 nome: "",
                 cpf: "",
                 idade: ""
             });
 
+            // Remove os estados de validaçao
             this.byId("inputNome").setValueState("None");
             this.byId("inputIdade").setValueState("None");
             this.byId("inputCPF").setValueState("None");
         },
 
         onSalvarPessoa: async function() {
-
             try {
 
                 const { isValid, errorMessage } = this.validateFields();

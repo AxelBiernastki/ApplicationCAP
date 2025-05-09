@@ -10,9 +10,9 @@ module.exports = cds.service.impl(async function (){
             req.error(400, "O nome não pode ser vazio!");
         }
 
-        // if (!idade || idade <= 0) {
-        //     req.error(400, "A idade deve ser maior que zero!")
-        // }
+        if (parseInt(idade) == 0) {
+            req.error(400, "A idade deve ser maior que zero!")
+        }
 
         const cpfStr = String(cpf).replace(/\D/g, "");
 
