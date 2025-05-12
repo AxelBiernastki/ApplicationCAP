@@ -10,7 +10,9 @@ sap.ui.define([
             const oFormModel = new sap.ui.model.json.JSONModel({
                 nome: "",
                 cpf: "",
-                idade: ""
+                idade: "",
+                isEditing: false,
+                editingContext: null
             });
             this.getView().setModel(oFormModel, "formModel");
         },
@@ -217,18 +219,20 @@ sap.ui.define([
             this.getView().getModel("formModel").setData({
                 nome: "",
                 cpf: "",
-                idade: ""
+                idade: "",
+                isEditing: false,
+                editingContext: null
             });
 
             // Remove os estados de validaçao
             this.byId("inputNome").setValueState("None");
             this.byId("inputIdade").setValueState("None");
             this.byId("inputCPF").setValueState("None");
+            this.byId("inputCPF").setEnabled(true);
         },
 
         onSalvarPessoa: async function() {
             try {
-
                 const { isValid, errorMessage } = this.validateFields();
 
                 if (!isValid) {
@@ -254,7 +258,19 @@ sap.ui.define([
 
                 this.byId("pessoasTable").getBinding("items").refresh();
             } catch (error) {
-                sap.m.MessageBox.error("Erro ao salvar:\n " + error.message);
+                MessageBox.error("Erro ao salvar:\n " + error.message);
+            }
+        },
+
+        onEditarPessoa: async function(oEvent) {
+            try{
+                const oItem = oEvent.getSource().getBindingContext();
+                const oPessoa = oItem.getObject();
+
+                // Preenche o formulário com os dados da pessoa selecionada
+                const oFormModel = this.getView().getModel("formModel");
+            } catch (error) {
+                
             }
         }
     });
