@@ -7,36 +7,69 @@
             <Bar id="barId">
                 <contentMiddle>
                     <HBox id="hboxId">
-                    <Image id="imageId" class="imgTitulo" src="imgs/SAP_2011_logo.svg"/>
-                    <Title id="titleId" text="{i18n>Formulário Simples}"
-                     class="tituloPersonalizado"/>
+                        <Image id="imageId" class="imgTitulo" src="imgs/SAP_2011_logo.svg"/>
+                        <Title id="titleId" text="{i18n>Formulário Simples}"
+                         class="tituloPersonalizado"/>
                     </HBox>
                 </contentMiddle>
             </Bar>
         </customHeader>
         
         <content>
-            <VBox id="vboxInicial"  class="sapUiSmallMargin meuFormulario">
+            <VBox id="vboxInicial" class="sapUiSmallMargin meuFormulario">
                 <form:SimpleForm id="simpleform">
                     <form:content>
                         <Label id="LabelNome" text="Nome" />
-                        <Input id="inputNome" value="{formModel>/nome}" liveChange="onNomeLiveChange" change="onNomeChange" required="true"/>
+                        <Input id="inputNome" 
+                               value="{formModel>/nome}" 
+                               liveChange="onNomeLiveChange" 
+                               change="onNomeChange" 
+                               required="true"/>
 
                         <Label id="labelIdade" text="Idade" />
-                        <Input id="inputIdade" value="{formModel>/idade}" liveChange="onIdadeLiveChange" change="onIdadeChange"/>
+                        <Input id="inputIdade" 
+                               value="{formModel>/idade}" 
+                               liveChange="onIdadeLiveChange" 
+                               change="onIdadeChange"/>
 
                         <Label id="labelCPF" text="CPF" />
-                        <Input id="inputCPF" maxLength="11" liveChange="onCpfLiveChange" change="onCpfChange" value="{formModel>/cpf}" required="true" />
+                        <Input id="inputCPF" 
+                               maxLength="11" 
+                               liveChange="onCpfLiveChange" 
+                               change="onCpfChange" 
+                               value="{formModel>/cpf}" 
+                               required="true" />
 
                         <VBox id="vboxButton" class="vboxButtonGrid">
-                            <Button id="btnCadastro" text="Cadastrar" press="onSalvarPessoa" type="Emphasized"/>
+                            <!-- Botão dinâmico que alterna entre Cadastrar e Atualizar -->
+                            <Button id="btnCadastro" 
+                                    text="{= ${formModel>/isEditing} ? 'Atualizar' : 'Cadastrar' }"
+                                    press="{= ${formModel>/isEditing} ? '.onAtualizarPessoa' : '.onSalvarPessoa' }"
+                                    type="Emphasized"/>
                             
-                            <Button id="buttonNav" press="onNavButton" text="Ver detalhes"/>
+                            <!-- Botão de cancelar edição - só aparece durante edição -->
+                            <Button id="btnCancelar"
+                                    text="Cancelar"
+                                    visible="{formModel>/isEditing}"
+                                    press="clearForm"
+                                    type="Transparent"/>
+                            
+                            <Button id="buttonNav" 
+                                    press="onNavButton" 
+                                    text="Ver detalhes"/>
                         </VBox>            
                     </form:content>
                 </form:SimpleForm>
 
-                <Table id="pessoasTable" items="{/pessoa}">
+                <Table id="pessoasTable" 
+                       items="{/pessoa}"
+                       mode="None"
+                       class="sapUiSmallMarginTop">
+                    <headerToolbar>
+                        <Toolbar id="toolbar">
+                            <Title id="titlePessoas" text="Lista de Pessoas Cadastradas"/>
+                        </Toolbar>
+                    </headerToolbar>
                     <columns>
                         <Column id="columCPF">
                             <Text id="txtCPF" text="CPF" />
@@ -47,13 +80,28 @@
                         <Column id="columIdade">
                             <Text id="txtIdade" text="Idade" />
                         </Column>
+                        <Column id="columAcoes" 
+                                hAlign="End"
+                                width="100px">
+                            <Text id="txtAcoes" text="Ações" />
+                        </Column>
                     </columns>
                     <items>
                         <ColumnListItem id="clmnListItem">
                             <cells>
                                 <Text id="cellcpf" text="{cpf}"/>
-                                <Text id="cellNome"  text="{nome}"/>
-                                <Text id="cellIdade"  text="{idade}" />
+                                <Text id="cellNome" text="{nome}"/>
+                                <Text id="cellIdade" text="{idade}" />
+                                <HBox id="hboxBotoes">
+                                    <Button id="editButton" icon="sap-icon://edit"
+                                            press="onEditarPessoa"
+                                            tooltip="Editar"
+                                            type="Transparent"/>
+                                    <Button id="deletButton" icon="sap-icon://delete"
+                                            press="onDeletarPessoa"
+                                            tooltip="Excluir"
+                                            type="Transparent"/>
+                                </HBox>
                             </cells>
                         </ColumnListItem>
                     </items>

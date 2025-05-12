@@ -23,7 +23,6 @@ module.exports = cds.service.impl(async function (){
         }
     }
 
-    // CREATE 
     this.before('CREATE', 'pessoa', async (req) => {
         validatePessoa(req.data, req);
 
@@ -34,7 +33,6 @@ module.exports = cds.service.impl(async function (){
         }
     });
 
-    // READ 
     this.on('READ', 'pessoa', async (req) => {
         try{
             const results = await SELECT.from(pessoa);
@@ -44,12 +42,10 @@ module.exports = cds.service.impl(async function (){
         }
     });
 
-    // UPDATE
     this.before('UPDATE', 'pessoa', (req) => {
         validatePessoa(req.data, req);
     });
 
-    // DELETE
     this.before('DELETE', 'pessoa', async (req) => {
         const cpf = req.data.cpf;
         if(!cpf) {

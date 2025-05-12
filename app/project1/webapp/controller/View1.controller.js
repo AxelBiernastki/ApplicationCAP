@@ -269,9 +269,72 @@ sap.ui.define([
 
                 // Preenche o formulário com os dados da pessoa selecionada
                 const oFormModel = this.getView().getModel("formModel");
+                oFormModel.setData({
+                    nome: oPessoa.nome,
+                    cpf: oPessoa.cpf,
+                    idade: oPessoa.idade.toString(),
+                    isEditing: true,
+                    editingContext: oItem
+                });
+
+                // Desabilita o campo CPF durante a edição
+                this.byId("inputCPF").setEnabled(false);
             } catch (error) {
-                
+                MessageBox.error("Erro ao carregar dados para edição: " + error.message);
             }
+        },
+
+        onAtualizarPessoa: async function() {
+            try{
+                const{ isValid, errorMessage } = this.validateFields();
+
+                if(!isValid) {
+                    MessageBox.error("Por favor, corrija os seguintes erros:\n" + errorMessage);
+                    return;
+                }
+
+                const oFormModel = this.getView().getModel("formModel");
+                const oFormData = oFormModel.getData();
+                const oContext = oFormData.editingContext;
+
+                if (!oContext) {
+                    MessageBox.error("Contexto de edição não encontrado!");
+                    return;
+                }
+
+                await oContext.setProperty("nome", oFormData.nome);
+                await oContext.setProperty("idade", parseInt(oFormData.idade));
+                
+                await this.getView().getModel().submitBatch();
+
+                MessageToast.show("Pessoa atualizada com sucesso!");
+                
+                this.clearForm();
+                this.byId("inputCPF").setEnabled(true);
+                this.byId("pessoasTable").getBinding("items").refresh();
+            } catch (error) {
+                MessageBox.error("Erro ao atualizar: " + error.message);
+            }
+        },
+
+        onDeletarPessoa: function(oEvent) {
+            const oItem = oEvent.getSource().getBindingContext();
+            const oPessoa = oItem.getObject();
+
+            MessageBox.confirm("Deseja realmente excluir esta pessoa?", {
+                title: "Confirmar exclusão",
+                onClose: async (oAction) => {
+                    if (oAction === MessageBox.Action.OK) {
+                        try {
+                            await oItem.delete();
+                            MessageToast.show("Pessoa excluída com sucesso!");
+                            this.byId("pessoasTable").getBinding("items").refresh();
+                        } catch (error) {
+                            MessageBox.error("Erro ao excluir: " + error.message);
+                        }
+                    }
+                }
+            });
         }
     });
 });

@@ -10,7 +10,7 @@
                     <Image id="imageId2" class="imgTitulo" src="imgs/SAP_2011_logo.svg"/>
                     <Title id="titleId2" text="{i18n>Segunda Página}"
                      class="tituloPersonalizado"/>
-                     <Button id="buttonNav2" press="navButton2" text="Voltar para o formulário"/>
+                     <Button id="buttonNav2" press=".onNavButton2" text="Voltar para o formulário"/>
                     </HBox>
                 </contentMiddle>
             </Bar>
